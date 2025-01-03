@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "@/components/ui/sonner";
 import Loader from "./loader";
 import Script from "next/script";
+import CookieConsent from "@/components/shared/cookie";
 
 const aeonik = localFont({
   src: [
@@ -60,6 +61,7 @@ export default function RootLayout({
             setTimeout(showContent, 2000);
           `}
         </Script>
+        <CookieConsent/>
       </body>
     </html>
   );
