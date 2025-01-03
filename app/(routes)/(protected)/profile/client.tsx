@@ -7,6 +7,7 @@ import { useAuth } from "@/hooks/use-auth";
 
 import ProfileInformation from "./_components/profile-information";
 import EditAddressSection from "./_components/edit-address";
+import ProfileLoading from "./_components/loading";
 
 const ProfileClientPage = () => {
   const { user } = useAuth();
@@ -17,11 +18,11 @@ const ProfileClientPage = () => {
   }, []);
 
   if (isLoading) {
-    return null;
+    return <ProfileLoading/>
   }
 
   if (!user) {
-    return null;
+    return <ProfileLoading/>
   }
 
   return (
