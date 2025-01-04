@@ -49,6 +49,9 @@ export default function NotFound() {
           >
             Return Home
           </Button>
+          <Button className="hidden">
+            hello
+          </Button>
         </div>
 
         {/* Decorative elements */}
