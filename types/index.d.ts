@@ -103,7 +103,6 @@ export interface ApiResponse<T> {
   message?: string;
 }
 
-// types/index.ts
 export interface LocationFormData {
   address: string;
   street: string;
@@ -127,6 +126,31 @@ interface Product {
   categoryId: string;
   category: Category;
   discounted_price?: number;
+}
+
+interface Review {
+  id: string;
+  rating: number;
+  comment: string;
+}
+
+interface Price {
+  value: string;
+  label: string;
+  price: string;
+}
+
+interface Subproduct {
+  id: string;
+  name: string;
+  stock: number;
+  perunitprice: number;
+  prices: Price[];
+  discount: number | null;
+  inStock: boolean;
+  featured: boolean;
+  image: Image[];
+  review: Review[];
 }
 
 interface Category {

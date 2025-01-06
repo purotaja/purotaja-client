@@ -1,96 +1,101 @@
-"use client"
-import { useCategories } from "@/hooks/use-category";
+"use client";
 import Link from "next/link";
+import Logo from "./logo";
+import useProducts from "@/hooks/use-product";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { Skeleton } from "../ui/skeleton";
 
-const footerItemsLinks = [
-  { title: "About", link: "/about" },
-  { title: "Shop", link: "/category" },
-  { title: "Cart", link: "/cart" },
-  { title: "Testimonials", link: "/#testimonials" },
-  { title: "Privacy", link: "/privacy" },
-  { title: "Terms", link: "/terms" },
-  { title: "FAQs", link: "/faqs" },
-  { title: "Contact", link: "/contact" },
+const company = [
+  { title: "Works", link: "/works" },
+  { title: "Clients", link: "/clients" },
+  { title: "Services", link: "/services" },
+  { title: "Products", link: "/products" },
+  { title: "Pricing", link: "/pricing" },
+];
+
+const legal = [
+  { title: "Privacy Policy", link: "/privacy-policy" },
+  { title: "Terms and Conditions", link: "/terms" },
+  { title: "Refund Policy", link: "/refund" },
 ];
 
 const FooterSection = () => {
-  const { categories } = useCategories();
-  
+  const { products, isLoading } = useProducts();
+
   return (
     <section className="w-full border-t mx-auto mt-10 md:mt-20">
-      <div className="w-full max-w-screen-2xl px-[1rem] md:px-14 mx-auto flex flex-col md:flex-row items-start gap-10">
-        <div className="md:w-[60%] w-full mt-10 flex gap-6 lg:justify-between">
-          <div className="w-[40%] md:w-1/2 flex flex-col gap-4">
-            <div className="w-full">
-              <h1 className="text-2xl text-customBlack font-medium">
-                Useful Links
-              </h1>
-            </div>
-            <div className="flex items-center lg:gap-16 gap-4">
-              <div className="flex flex-col gap-3 items-start">
-                {footerItemsLinks.slice(0, 4).map((item) => (
-                  <Link
-                    href={item.link}
-                    key={item.title}
-                  >
-                    <h1 className="text-customGray text-sm">{item.title}</h1>
-                  </Link>
-                ))}
-              </div>
-              <div className="flex flex-col gap-3 items-start">
-                {footerItemsLinks.slice(4, 8).map((item) => (
-                  <Link
-                    href={item.link}
-                    key={item.title}
-                  >
-                    <h1 className="text-customGray text-sm">{item.title}</h1>
-                  </Link>
-                ))}
-              </div>
-            </div>
+      <div className="w-full max-w-screen-2xl px-[1rem] md:px-14 mx-auto flex flex-col md:flex-row items-start mt-10 md:justify-between gap-10">
+        <div className="flex flex-col md:w-[30%] gap-4 justify-center md:pl-10">
+          <div className="flex items-center gap-4 w-full">
+            <Logo height={80} width={80} />
+            <p className="text-2xl font-semibold">PuroTaja</p>
           </div>
-
-          <div className="w-[60%] md:w-1/2 flex flex-col gap-4">
-            <div className="w-full">
-              <h1 className="text-2xl text-customBlack font-medium">
-                Categories
-              </h1>
-            </div>
-            <div className="flex items-center lg:gap-16 gap-4">
-              <div className="flex flex-col gap-3 items-start">
-                {categories.slice(0, 4).map((item) => (
-                  <Link
-                    href={"/category"}
-                    key={item.name}
-                  >
-                    <h1 className="text-customGray text-sm">{item.name}</h1>
-                  </Link>
-                ))}
-              </div>
-              <div className="flex flex-col gap-3 items-start">
-                {categories.slice(4, 8).map((item) => (
-                  <Link
-                    href={"/category"}
-                    key={item.name}
-                  >
-                    <h1 className="text-customGray text-sm">{item.name}</h1>
-                  </Link>
-                ))}
-              </div>
-            </div>
+          <p className="text-muted-foreground">
+            © 2024 PuroTaja. All rights reserved.
+          </p>
+          <p className="text-muted-foreground">purotaja@gmail.com</p>
+          <div className="flex gap-2 items-center">
+            <Link href="">
+              <FaLinkedin size={16} color="#9D9D9D" />
+            </Link>
+            <span className="text-muted-foreground">/</span>
+            <Link href="">
+              <FaInstagram size={16} color="#9D9D9D" />
+            </Link>
           </div>
         </div>
-
-        <div className="md:w-[40%] w-full flex items-center justify-center md:mt-10">
-          <div className="w-full aspect-video rounded-lg overflow-hidden bg-white border">
-            <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3684.501244011331!2d88.48770200862216!3d22.56034883333806!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a020b007af9ca31%3A0xa3a41f4146303146!2sUEM!5e0!3m2!1sen!2sin!4v1731930397063!5m2!1sen!2sin"
-              className="w-full h-full"
-              style={{ border: 0 }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              aria-label="UEM location map"
-            />
+        <div className="flex md:flex-row flex-col gap-8 md:gap-28 md:w-[60%] w-full">
+          <div className="flex flex-col gap-2">
+            <p className="text-xl font-semibold">Company</p>
+            {company.map((item, index) => (
+              <Link key={index} href={item.link}>
+                <span className="text-lg">{item.title}</span>
+              </Link>
+            ))}
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-xl font-semibold">Legal</p>
+            {legal.map((item, index) => (
+              <Link key={index} href={item.link}>
+                <span className="text-lg">{item.title}</span>
+              </Link>
+            ))}
+          </div>
+          <div className="flex flex-col gap-2">
+            <p className="text-xl font-semibold">Products</p>
+            {isLoading ? (
+              <div className="flex gap-8">
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                </div>
+              </div>
+            ) : (
+              <div className="flex gap-8">
+                <div className="flex flex-col gap-2">
+                  {products.slice(0, 5).map((product, index) => (
+                    <Link key={index} href={`/category/products/${product.id}`}>
+                      <span className="text-lg">{product.name}</span>
+                    </Link>
+                  ))}
+                </div>
+                <div className="flex flex-col gap-2">
+                  {products.slice(0, 5).map((product, index) => (
+                    <Link key={index} href={`/category/products/${product.id}`}>
+                      <span className="text-lg">{product.name}</span>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

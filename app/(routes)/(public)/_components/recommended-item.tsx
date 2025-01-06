@@ -3,7 +3,7 @@ import ItemCard from "./sub-components/best-sellers/item-card";
 import CustomSwiper from "@/components/shared/swiper";
 import { Card } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
-import useProducts from "@/hooks/use-product";
+import useSubproducts from "@/hooks/use-subproducts";
 
 const RecommendItemsSkeleton = () => (
   <>
@@ -44,9 +44,9 @@ const RecommendItemsSkeleton = () => (
 
 
 const RecommendItems = () => {
-  const { products, isLoading, error } = useProducts();
+  const { standardVariants, isLoading, error } = useSubproducts();
 
-  if (error) {
+  if (error || (!isLoading && (!standardVariants || standardVariants.length === 0))) {
     return null;
   }
 
@@ -66,8 +66,8 @@ const RecommendItems = () => {
         <RecommendItemsSkeleton />
       ) : (
         <CustomSwiper>
-          {products.map((item) => (
-            <ItemCard key={item.id} product={item} />
+          {standardVariants.map((item) => (
+            <ItemCard key={item.id} subproduct={item} />
           ))}
         </CustomSwiper>
       )}
