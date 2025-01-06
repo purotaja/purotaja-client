@@ -1,5 +1,5 @@
-"use client"
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import { Plus, MapPin, LocateFixed, Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -36,10 +36,17 @@ export const AddressDropdown = ({ onAddressSelect }: AddressDropdownProps) => {
     setDefaultAddress,
   } = useAddressManagement(clientId);
 
-  const [isMapModalOpen, setIsMapModalOpen] = useState(false);
+  const [isMounted, setIsMounted] = useState(false);
+
+  useEffect(() => {
+    setIsMounted(true);
+  }, []);
+
+  // const [isMapModalOpen, setIsMapModalOpen] = useState(false);
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [editingAddress, setEditingAddress] = useState<Address | null>(null);
-  const [prefilledFormData, setPrefilledFormData] = useState<Partial<AddressInput> | null>(null);
+  const [prefilledFormData, setPrefilledFormData] =
+    useState<Partial<AddressInput> | null>(null);
 
   const handleAddressSelect = async (address: Address) => {
     setSelectedAddress(address);
@@ -67,7 +74,7 @@ export const AddressDropdown = ({ onAddressSelect }: AddressDropdownProps) => {
       } else {
         const success = await addAddress({
           ...data,
-          isDefault: addresses.length === 0 || data.isDefault
+          isDefault: addresses.length === 0 || data.isDefault,
         });
         if (success) {
           toast.success("Address added successfully");
@@ -81,36 +88,48 @@ export const AddressDropdown = ({ onAddressSelect }: AddressDropdownProps) => {
     }
   };
 
-  const handleMapAddressSelect = (locationData: LocationFormData) => {
-    setIsMapModalOpen(false);
+  // const handleMapAddressSelect = (locationData: LocationFormData) => {
+  //   setIsMapModalOpen(false);
 
-    const newAddressData: AddressInput = {
-      address: locationData.address,
-      street: locationData.street,
-      appartment: locationData.appartment || "",
-      postalCode: locationData.postalCode,
-      label: locationData.label || "OTHER",
-      isDefault: addresses.length === 0,
-    };
+  //   const newAddressData: AddressInput = {
+  //     address: locationData.address,
+  //     street: locationData.street,
+  //     appartment: locationData.appartment || "",
+  //     postalCode: locationData.postalCode,
+  //     label: locationData.label || "OTHER",
+  //     isDefault: addresses.length === 0,
+  //   };
 
-    setPrefilledFormData(newAddressData);
-    setEditingAddress(null);
-    setIsAddressModalOpen(true);
-  };
+  //   setPrefilledFormData(newAddressData);
+  //   setEditingAddress(null);
+  //   setIsAddressModalOpen(true);
+  // };
+
+
+
+  if (!isMounted) {
+    return (
+      <div className="flex flex-col items-start">
+        <span className="text-violet text-lg font-medium text-left">
+          Select Address
+        </span>
+        <span className="flex items-center gap-2 text-sm text-gray-600">
+          No address selected
+        </span>
+      </div>
+    );
+  }
 
   return (
     <>
       <DropdownMenu>
-        <DropdownMenuTrigger asChild className="border-none">
-          <Button
-            variant="outline"
-            className="flex flex-col items-start border-none"
-          >
-            <h1 className="text-violet text-lg font-medium text-left">
-              Select Address
-            </h1>
-            <p className="flex items-center gap-2">
-              <span className="text-sm text-gray-600 line-clamp-1 max-w-[20vh] rounded-r-lg [mask-image:linear-gradient(to_right,transparent,black_0%,black_95%,transparent)]">
+        <DropdownMenuTrigger asChild>
+          <div className="flex flex-col items-start cursor-pointer">
+            <span className="text-violet text-lg font-medium text-left">
+              {user ? user?.name : "Select Address"}
+            </span>
+            <span className="flex items-center gap-2 text-sm text-gray-600 line-clamp-1 min-w-[25vh] rounded-r-lg [mask-image:linear-gradient(to_right,transparent,black_0%,black_95%,transparent)]">
+              <span className="text-sm text-gray-600 line-clamp-1 max-w-[15vh] rounded-r-lg [mask-image:linear-gradient(to_right,transparent,black_0%,black_95%,transparent)]">
                 {selectedAddress
                   ? selectedAddress.address
                   : "No address selected"}
@@ -118,8 +137,8 @@ export const AddressDropdown = ({ onAddressSelect }: AddressDropdownProps) => {
               {selectedAddress?.isDefault && (
                 <Star className="w-4 h-4 text-yellow-500" />
               )}
-            </p>
-          </Button>
+            </span>
+          </div>
         </DropdownMenuTrigger>
 
         <DropdownMenuContent className="w-[400px]">
@@ -169,7 +188,7 @@ export const AddressDropdown = ({ onAddressSelect }: AddressDropdownProps) => {
 
           <DropdownMenuSeparator />
 
-          <DropdownMenuItem
+          {/* <DropdownMenuItem
             onSelect={() => setIsMapModalOpen(true)}
             className={cn(
               "cursor-pointer hover:bg-gray-100",
@@ -180,7 +199,7 @@ export const AddressDropdown = ({ onAddressSelect }: AddressDropdownProps) => {
               <LocateFixed className="w-5 h-5 text-blue-600" />
               <span className="text-blue-600">Use Current Location</span>
             </div>
-          </DropdownMenuItem>
+          </DropdownMenuItem> */}
 
           <DropdownMenuItem
             onSelect={handleAddNewAddress}
@@ -201,14 +220,14 @@ export const AddressDropdown = ({ onAddressSelect }: AddressDropdownProps) => {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {isMapModalOpen && (
+      {/* {isMapModalOpen && (
         <GoogleMapModal
           isOpen={isMapModalOpen}
           onClose={() => setIsMapModalOpen(false)}
           onAddressSelect={handleMapAddressSelect}
           googleMapsApiKey={process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || ""}
         />
-      )}
+      )} */}
 
       {isAddressModalOpen && (
         <AddressModal

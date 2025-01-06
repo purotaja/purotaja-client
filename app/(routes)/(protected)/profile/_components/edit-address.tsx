@@ -159,12 +159,12 @@ const EditAddressSection = ({ user }: AddressProps) => {
                   </div>
                 </div>
                 <div className="text-sm text-gray-600">
-                  <p>
+                  <span>
                     {address.appartment && `${address.appartment}, `}
                     {address.street}
-                  </p>
-                  <p>{address.address}</p>
-                  <p>Postal Code: {address.postalCode}</p>
+                  </span>
+                  <span>{address.address}</span>
+                  <span>Postal Code: {address.postalCode}</span>
                 </div>
               </div>
             ))}

@@ -1,4 +1,3 @@
-import Copyright from "@/components/shared/copy-right";
 import FooterSection from "@/components/shared/footer";
 import MobileNav from "@/components/shared/mobile-nav";
 import Navbar from "@/components/shared/navbar";
@@ -12,7 +11,6 @@ const PublicRouteLayout = ({ children }: RoutesLayoutProps) => {
       <div className="mt-14 pb-5">
         {children}
         <FooterSection/>
-        <Copyright />
       </div>
     </main>
   );
