@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Plus, MapPin, LocateFixed, Star } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Plus, MapPin, Star } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -14,7 +13,6 @@ import {
 import { Address, AddressInput, LocationFormData } from "@/types";
 import { cn } from "@/lib/utils";
 import { useAddressManagement } from "@/hooks/use-address";
-import { GoogleMapModal } from "./google-map-modal";
 import { AddressModal } from "./address-modal";
 import { useAuth } from "@/hooks/use-auth";
 import { toast } from "sonner";
@@ -177,7 +175,7 @@ export const AddressDropdown = ({ onAddressSelect }: AddressDropdownProps) => {
                       </div>
                       <p className="text-xs text-gray-500 line-clamp-1">
                         {address.appartment && `${address.appartment}, `}
-                        {address.street}, {address.address}
+                        {address.city}, {address.address}
                       </p>
                     </div>
                   </div>

@@ -10,7 +10,7 @@ const Navbar = () => {
         <div className="w-[10%] py-3 items-center flex border-r-[1px] border-gray-200">
           <Logo height={90} width={90} />
         </div>
-        <div className="w-[70%] items-center flex gap-10 px-5">
+        <div className="w-[70%] items-center flex gap-10 px-10">
           <AddressDropdown />
           <SearchItem />
         </div>

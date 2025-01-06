@@ -49,7 +49,7 @@ export const DeleteConfirmModal = ({
               <p className="font-medium">{address.label}</p>
               <p className="text-sm text-gray-600">
                 {address.appartment && `${address.appartment}, `}
-                {address.street}
+                {address.city}
               </p>
               <p className="text-sm text-gray-600">{address.address}</p>
             </div>
