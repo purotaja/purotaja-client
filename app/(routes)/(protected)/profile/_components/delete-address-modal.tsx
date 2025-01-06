@@ -46,12 +46,12 @@ export const DeleteConfirmModal = ({
           <AlertDialogDescription>
             Are you sure you want to delete this address?
             <div className="mt-2 p-3 bg-gray-50 rounded-md">
-              <p className="font-medium">{address.label}</p>
-              <p className="text-sm text-gray-600">
+              <span className="font-medium">{address.label}</span>
+              <span className="text-sm text-gray-600">
                 {address.appartment && `${address.appartment}, `}
                 {address.city}
-              </p>
-              <p className="text-sm text-gray-600">{address.address}</p>
+              </span>
+              <span className="text-sm text-gray-600">{address.address}</span>
             </div>
           </AlertDialogDescription>
         </AlertDialogHeader>

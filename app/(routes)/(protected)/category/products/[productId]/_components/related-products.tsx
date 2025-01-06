@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useCategory } from "@/hooks/use-category";
 import { Product } from "@/types";
-import CategoryProductCard from '../../../_components/category-product-card';
+import CategoryProductCard from '../../../_components/category-subproduct-card';
 import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 

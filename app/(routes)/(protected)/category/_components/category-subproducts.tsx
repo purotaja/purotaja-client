@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import { useCategory, useCategories } from "@/hooks/use-category";
-import CategoryProductCard from "./category-product-card";
+import CategoryProductCard from "./category-subproduct-card";
 import { Product } from "@/types";
-import { ArrowDown, ArrowDownUp, SlidersHorizontal } from "lucide-react";
+import { ArrowDownUp, SlidersHorizontal } from "lucide-react";
 import {
   Select,
   SelectContent,
@@ -13,7 +13,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 
-const CategoryProducts = ({
+const CategorySubproducts = ({
   selectedCategoryId,
 }: {
   selectedCategoryId: string | null;
@@ -22,6 +22,7 @@ const CategoryProducts = ({
   const [displayProducts, setDisplayProducts] = useState<Product[]>([]);
   const [isLoadingAll, setIsLoadingAll] = useState(false);
   const [priceRange, setPriceRange] = useState<string>("");
+  const [selectedProductFilter, setSelectedProductFilter] = useState<string>("all");
 
   const {
     products,
@@ -95,6 +96,26 @@ const CategoryProducts = ({
     setDisplayProducts(filteredProducts);
   };
 
+  const handleProductFilter = (value: string) => {
+    setSelectedProductFilter(value);
+    if (value === "all") {
+      setDisplayProducts(selectedCategoryId ? products : allProducts);
+      return;
+    }
+
+    const filteredProducts = (selectedCategoryId ? products : allProducts).filter(
+      (product) => product.name.toLowerCase() === value.toLowerCase()
+    );
+    setDisplayProducts(filteredProducts);
+  };
+
+  // Get unique product names for the filter
+  const uniqueProductNames = Array.from(
+    new Set(
+      (selectedCategoryId ? products : allProducts).map((product) => product.name)
+    )
+  ).sort();
+
   if (selectedCategoryId ? isCategoryLoading : isLoadingAll) {
     return (
       <div className="w-full h-[400px] flex items-center justify-center">
@@ -114,39 +135,6 @@ const CategoryProducts = ({
   if (displayProducts.length === 0) {
     return (
       <div className="w-full h-[400px] flex flex-col items-center justify-center font-medium text-xl gap-5">
-        {/* <div className="flex gap-5 w-full items-start">
-          <Select>
-            <SelectTrigger className="flex items-center gap-2 cursor-pointer w-auto text-violet">
-              <SlidersHorizontal className="w-5 h-5" />
-              <SelectValue placeholder="Filters" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Fruits</SelectLabel>
-                <SelectItem value="apple">Apple</SelectItem>
-                <SelectItem value="banana">Banana</SelectItem>
-                <SelectItem value="blueberry">Blueberry</SelectItem>
-                <SelectItem value="grapes">Grapes</SelectItem>
-                <SelectItem value="pineapple">Pineapple</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-          <Select onValueChange={handlePriceSort} value={priceRange}>
-            <SelectTrigger className="flex items-center gap-2 cursor-pointer w-auto text-violet">
-              <ArrowDownUp className="w-5 h-5 text-violet" />
-              <SelectValue placeholder="Sort by Price" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectGroup>
-                <SelectLabel>Price Range</SelectLabel>
-                <SelectItem value="0">100 - 300</SelectItem>
-                <SelectItem value="300">300 - 600</SelectItem>
-                <SelectItem value="600">600 - 1000</SelectItem>
-                <SelectItem value="1000">more than 1000</SelectItem>
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        </div> */}
         No products Available
         <div className="h-8 w-8 animate-spin rounded-full border-4 border-gray-200 border-t-violet" />
       </div>
@@ -156,19 +144,22 @@ const CategoryProducts = ({
   return (
     <div className="w-full flex flex-col gap-10 items-center">
       <div className="flex gap-5 w-full items-start">
-        <Select>
+        <Select onValueChange={handleProductFilter} value={selectedProductFilter}>
           <SelectTrigger className="flex items-center gap-2 cursor-pointer w-auto text-violet">
             <SlidersHorizontal className="w-5 h-5" />
-            <SelectValue placeholder="Filters" />
+            <SelectValue placeholder="Filter by Product" />
           </SelectTrigger>
           <SelectContent>
             <SelectGroup>
-              <SelectLabel>Fruits</SelectLabel>
-              <SelectItem value="apple">Apple</SelectItem>
-              <SelectItem value="banana">Banana</SelectItem>
-              <SelectItem value="blueberry">Blueberry</SelectItem>
-              <SelectItem value="grapes">Grapes</SelectItem>
-              <SelectItem value="pineapple">Pineapple</SelectItem>
+              <SelectLabel>Products</SelectLabel>
+              <SelectItem value="all">All Products</SelectItem>
+              <div className="max-h-[18vh] overflow-y-auto">
+              {uniqueProductNames.map((name) => (
+                <SelectItem key={name} value={name.toLowerCase()}>
+                  {name}
+                </SelectItem>
+              ))}
+              </div>
             </SelectGroup>
           </SelectContent>
         </Select>
@@ -197,4 +188,4 @@ const CategoryProducts = ({
   );
 };
 
-export default CategoryProducts;
+export default CategorySubproducts;
