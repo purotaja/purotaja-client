@@ -2,7 +2,8 @@
 import Link from "next/link";
 import Logo from "./logo";
 import useProducts from "@/hooks/use-product";
-import { FaLinkedin, FaInstagram  } from "react-icons/fa";
+import { FaLinkedin, FaInstagram } from "react-icons/fa";
+import { Skeleton } from "../ui/skeleton";
 
 const company = [
   { title: "Works", link: "/works" },
@@ -32,16 +33,14 @@ const FooterSection = () => {
           <p className="text-muted-foreground">
             © 2024 PuroTaja. All rights reserved.
           </p>
-          <p className="text-muted-foreground">
-          purotaja@gmail.com
-          </p>
+          <p className="text-muted-foreground">purotaja@gmail.com</p>
           <div className="flex gap-2 items-center">
             <Link href="">
-              <FaLinkedin size={16} color="#9D9D9D"/>
+              <FaLinkedin size={16} color="#9D9D9D" />
             </Link>
             <span className="text-muted-foreground">/</span>
             <Link href="">
-              <FaInstagram  size={16} color="#9D9D9D"/>
+              <FaInstagram size={16} color="#9D9D9D" />
             </Link>
           </div>
         </div>
@@ -64,22 +63,39 @@ const FooterSection = () => {
           </div>
           <div className="flex flex-col gap-2">
             <p className="text-xl font-semibold">Products</p>
-            <div className="flex gap-8">
-              <div className="flex flex-col gap-2">
-                {products.slice(0, 5).map((product, index) => (
-                  <Link key={index} href={`/category/products/${product.id}`}>
-                    <span className="text-lg">{product.name}</span>
-                  </Link>
-                ))}
+            {isLoading ? (
+              <div className="flex gap-8">
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                  <Skeleton className="w-20 h-5" />
+                </div>
               </div>
-              <div className="flex flex-col gap-2">
-                {products.slice(0, 5).map((product, index) => (
-                  <Link key={index} href={`/category/products/${product.id}`}>
-                    <span className="text-lg">{product.name}</span>
-                  </Link>
-                ))}
+            ) : (
+              <div className="flex gap-8">
+                <div className="flex flex-col gap-2">
+                  {products.slice(0, 5).map((product, index) => (
+                    <Link key={index} href={`/category/products/${product.id}`}>
+                      <span className="text-lg">{product.name}</span>
+                    </Link>
+                  ))}
+                </div>
+                <div className="flex flex-col gap-2">
+                  {products.slice(0, 5).map((product, index) => (
+                    <Link key={index} href={`/category/products/${product.id}`}>
+                      <span className="text-lg">{product.name}</span>
+                    </Link>
+                  ))}
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
       </div>
