@@ -116,7 +116,11 @@ const CategorySubproducts = ({
     )
   ).sort();
 
-  if (selectedCategoryId ? isCategoryLoading : isLoadingAll) {
+  // Only show loader during initial data fetch
+  const isInitialLoading = (selectedCategoryId ? isCategoryLoading : isLoadingAll) && 
+    (selectedCategoryId ? products.length === 0 : allProducts.length === 0);
+
+  if (isInitialLoading) {
     return (
       <div className="w-full h-[400px] flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900" />
@@ -154,11 +158,11 @@ const CategorySubproducts = ({
               <SelectLabel>Products</SelectLabel>
               <SelectItem value="all">All Products</SelectItem>
               <div className="max-h-[18vh] overflow-y-auto">
-              {uniqueProductNames.map((name) => (
-                <SelectItem key={name} value={name.toLowerCase()}>
-                  {name}
-                </SelectItem>
-              ))}
+                {uniqueProductNames.map((name) => (
+                  <SelectItem key={name} value={name.toLowerCase()}>
+                    {name}
+                  </SelectItem>
+                ))}
               </div>
             </SelectGroup>
           </SelectContent>
