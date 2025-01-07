@@ -158,6 +158,7 @@ interface Category {
   name: string;
   image: Image[];
   product?: Product[];
+  Subproduct?: Subproduct[];
 }
 
 interface Subcategory {
