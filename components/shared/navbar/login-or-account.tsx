@@ -30,7 +30,7 @@ const LoginOrAccount = () => {
   );
 
   return (
-    <div className="w-full items-center flex justify-end gap-5 px-1 pr-5">
+    <div className="w-full items-center flex justify-end gap-4 px-2 pr-5">
       {isLoggedIn ? (
         <>
           <UserNav />

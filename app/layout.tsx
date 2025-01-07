@@ -5,6 +5,7 @@ import { Toaster } from "@/components/ui/sonner";
 import Loader from "./loader";
 import Script from "next/script";
 import CookieConsent from "@/components/shared/cookie";
+import Providers from "./providers";
 
 const aeonik = localFont({
   src: [
@@ -36,7 +37,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-      <style>{`
+        <style>{`
           #content { display: none; }
           #loader { display: flex; }
         `}</style>
@@ -49,7 +50,7 @@ export default function RootLayout({
           <Loader />
         </div>
         <div id="content">
-          {children}
+          <Providers>{children}</Providers>
           <Toaster />
         </div>
         <Script id="show-page" strategy="afterInteractive">

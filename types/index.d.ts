@@ -76,7 +76,7 @@ export type LabelType = 'HOME' | 'WORK' | 'OTHER';
 export interface Address {
   id: string;
   address: string;
-  street: string;
+  city: string;
   appartment: string;
   postalCode: string;
   isDefault: boolean;
@@ -90,7 +90,7 @@ export interface Address {
 
 export interface AddressInput {
   address: string;
-  street: string;
+  city: string;
   appartment: string;
   postalCode: string;
   isDefault?: boolean;
@@ -105,7 +105,7 @@ export interface ApiResponse<T> {
 
 export interface LocationFormData {
   address: string;
-  street: string;
+  city: string;
   appartment: string;
   postalCode: string;
   label: LabelType;
@@ -158,6 +158,7 @@ interface Category {
   name: string;
   image: Image[];
   product?: Product[];
+  Subproduct?: Subproduct[];
 }
 
 interface Subcategory {

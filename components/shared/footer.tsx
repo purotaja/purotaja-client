@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 import Logo from "./logo";
-import useProducts from "@/hooks/use-product";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import { Skeleton } from "../ui/skeleton";
+import { useProducts } from "@/hooks/use-product";
 
 const company = [
   { title: "Works", link: "/works" },
@@ -20,7 +20,7 @@ const legal = [
 ];
 
 const FooterSection = () => {
-  const { products, isLoading } = useProducts();
+  const { data: products, isLoading, error } = useProducts();
 
   return (
     <section className="w-full border-t mx-auto mt-10 md:mt-20">
@@ -45,11 +45,12 @@ const FooterSection = () => {
           </div>
         </div>
         <div className="flex md:flex-row flex-col gap-8 md:gap-28 md:w-[60%] w-full">
+          <div className="flex md:gap-8 w-full md:w-[60%] justify-between">
           <div className="flex flex-col gap-2">
             <p className="text-xl font-semibold">Company</p>
             {company.map((item, index) => (
               <Link key={index} href={item.link}>
-                <span className="text-lg">{item.title}</span>
+                <span>{item.title}</span>
               </Link>
             ))}
           </div>
@@ -57,9 +58,10 @@ const FooterSection = () => {
             <p className="text-xl font-semibold">Legal</p>
             {legal.map((item, index) => (
               <Link key={index} href={item.link}>
-                <span className="text-lg">{item.title}</span>
+                <span>{item.title}</span>
               </Link>
             ))}
+          </div>
           </div>
           <div className="flex flex-col gap-2">
             <p className="text-xl font-semibold">Products</p>
@@ -81,16 +83,16 @@ const FooterSection = () => {
             ) : (
               <div className="flex gap-8">
                 <div className="flex flex-col gap-2">
-                  {products.slice(0, 5).map((product, index) => (
-                    <Link key={index} href={`/category/products/${product.id}`}>
-                      <span className="text-lg">{product.name}</span>
+                  {products?.slice(0, 5).map((product, index) => (
+                    <Link key={index} href={`/category`}>
+                      <span>{product.name}</span>
                     </Link>
                   ))}
                 </div>
                 <div className="flex flex-col gap-2">
-                  {products.slice(0, 5).map((product, index) => (
-                    <Link key={index} href={`/category/products/${product.id}`}>
-                      <span className="text-lg">{product.name}</span>
+                  {products?.slice(0, 5).map((product, index) => (
+                    <Link key={index} href={`/category`}>
+                      <span>{product.name}</span>
                     </Link>
                   ))}
                 </div>

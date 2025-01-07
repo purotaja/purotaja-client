@@ -29,7 +29,7 @@ const TestimonialsColumn = (props: {
       >
         {[...new Array(2)].fill(0).map((_, index) => (
           <React.Fragment key={index}>
-            {props.testimonials.map(({ text, imageSrc, name, userName }) => (
+            {props.testimonials.map(({ text, imageSrc, name }) => (
               <div
                 className="p-10 border border-solid border-[#222222]/10 rounded-3xl shadow-[0_7px_14px_#EAEAEA] max-w-sm w-full"
                 key={name}
@@ -48,9 +48,6 @@ const TestimonialsColumn = (props: {
                   <div className="flex flex-col">
                     <div className="font-medium text-green tracking-tight leading-5 nunito">
                       {name}
-                    </div>
-                    <div className="leading-5 text-green tracking-tight text-sm nunito">
-                      {userName}
                     </div>
                   </div>
                 </div>

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Category, Product } from '@/types';
+import { Category, Product, Subproduct } from '@/types';
 
 interface CategoriesResponse {
   categories: Category[];
@@ -8,6 +8,7 @@ interface CategoriesResponse {
 interface CategoryResponse {
   category: Category & {
     product: Product[];
+    subproduct: Subproduct[];
   };
 }
 

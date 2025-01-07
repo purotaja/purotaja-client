@@ -10,7 +10,7 @@ import {
 import useProductDetails from "@/hooks/use-product-details";
 import RelatedProducts from "./_components/related-products";
 
-export default function Page({ params }: { params: { productId: string } }) {
+export default function SubproductClientPage({ params }: { params: { productId: string } }) {
   const { product } = useProductDetails(params.productId);
 
   return (

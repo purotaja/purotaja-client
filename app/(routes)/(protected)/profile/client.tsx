@@ -26,7 +26,7 @@ const ProfileClientPage = () => {
   }
 
   return (
-    <section className="w-full max-w-screen-2xl mx-auto px-5 md:px-14 py-8">
+    <section className="w-full max-w-screen-2xl min-h-screen mx-auto px-5 md:px-14 py-8">
       <h1 className="text-2xl font-bold mb-6">My Account</h1>
       
       <Tabs defaultValue="profile" className="w-full">

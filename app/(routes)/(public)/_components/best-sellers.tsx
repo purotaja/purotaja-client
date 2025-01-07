@@ -45,7 +45,10 @@ const BestSellers = () => {
   const { subproducts, standardVariants, isLoading, error } = useSubproducts();
 
   // If there's an error or no data, return null
-  if (error || (!isLoading && (!subproducts || subproducts.length === 0))) {
+  if (
+    error ||
+    (!isLoading && (!standardVariants || standardVariants.length === 0))
+  ) {
     return null;
   }
 
@@ -56,18 +59,18 @@ const BestSellers = () => {
           Best Sellers
         </h1>
       </div>
-      
+
       {isLoading ? (
         <BestSellersSkeleton />
       ) : (
-          <div className="w-full">
-            <CustomSwiper>
-              {standardVariants.map((item) => (
-                <ItemCard key={item.id} subproduct={item} />
-              ))}
-            </CustomSwiper>
-          </div>
-        )}
+        <div className="w-full">
+          <CustomSwiper>
+            {standardVariants?.map((item) => (
+              <ItemCard key={item.id} subproduct={item} />
+            ))}
+          </CustomSwiper>
+        </div>
+      )}
     </section>
   );
 };

@@ -24,7 +24,7 @@ import { toast } from 'sonner';
 
 const addressSchema = z.object({
   address: z.string().min(1, 'Address is required'),
-  street: z.string().min(1, 'Street is required'),
+  city: z.string().min(1, 'City is required'),
   appartment: z.string(),
   postalCode: z.string().min(1, 'Postal code is required'),
   label: z.enum(['HOME', 'WORK', 'OTHER']),
@@ -57,7 +57,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
     resolver: zodResolver(addressSchema),
     defaultValues: {
       address: initialData?.address || '',
-      street: initialData?.street || '',
+      city: initialData?.city || '',
       appartment: initialData?.appartment || '',
       postalCode: initialData?.postalCode || '',
       label: initialData?.label || 'OTHER',
@@ -105,14 +105,14 @@ export const AddressModal: React.FC<AddressModalProps> = ({
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="street">Street</Label>
+            <Label htmlFor="city">City</Label>
             <Input
-              id="street"
-              {...register('street')}
-              placeholder="Enter street name"
+              id="city"
+              {...register('city')}
+              placeholder="Enter city name"
             />
-            {errors.street && (
-              <p className="text-red-500 text-sm">{errors.street.message}</p>
+            {errors.city && (
+              <p className="text-red-500 text-sm">{errors.city.message}</p>
             )}
           </div>
 

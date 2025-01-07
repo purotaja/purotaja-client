@@ -82,7 +82,7 @@ const ProfileInformation = ({ user }: ProfileInformationProps) => {
                   disabled
                   className="bg-gray-50"
                 />
-                <p className="text-sm text-gray-500">Phone number cannot be changed</p>
+                <span className="text-sm text-gray-500">Phone number cannot be changed</span>
               </div>
             </div>
           </div>
