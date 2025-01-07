@@ -1,49 +1,81 @@
-import { useEffect, useState } from 'react';
-import { Product } from '@/types';
+import { useQuery } from '@tanstack/react-query';
 
-interface ProductsResponse {
-  products: Product[];
-  pagination: {
-    currentPage: number;
-    totalPages: number;
-    totalProducts: number;
-  };
+interface Image {
+  id: string;
+  url: string;
+  key: string;
 }
 
-const useProducts = () => {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+interface Category {
+  id: string;
+  name: string;
+}
 
-  useEffect(() => {
-    const fetchProducts = async () => {
-      try {
-        setIsLoading(true);
-        setError(null);
+interface Subproduct {
+  id: string;
+  name: string;
+  stock: number;
+  perunitprice: number;
+  prices: {
+    value: string;
+    label: string;
+    price: string;
+  }[];
+  inStock: boolean;
+  featured: boolean;
+  discount: number | null;
+  image: Image[];
+}
 
-        const response = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_STORE_ID}/products`
-        );
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  image: Image[];
+  category: Category;
+  subproduct: Subproduct[];
+}
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch products');
-        }
-
-        const data: ProductsResponse = await response.json();
-
-        setProducts(data.products);
-      } catch (err) {
-        setError(err instanceof Error ? err.message : 'Something went wrong');
-        console.error('Error fetching products:', err);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    fetchProducts();
-  }, []);
-
-  return { products, isLoading, error };
+const fetchProducts = async (): Promise<Product[]> => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_STORE_ID}/products`
+  );
+  const data = await response.json();
+  return data.products;
 };
 
-export default useProducts;
+const fetchProductById = async (productId: string): Promise<Product> => {
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_API_URL}/${process.env.NEXT_PUBLIC_STORE_ID}/products/${productId}`
+  );
+  const data = await response.json();
+  return data.product;
+};
+
+export const useProducts = () => {
+  return useQuery({
+    queryKey: ['products'],
+    queryFn: fetchProducts,
+    staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
+  });
+};
+
+export const useProduct = (productId: string) => {
+  return useQuery({
+    queryKey: ['product', productId],
+    queryFn: () => fetchProductById(productId),
+    staleTime: 1000 * 60 * 5,
+    enabled: !!productId,
+  });
+};
+
+// Utility hook for filtering products by category
+export const useFilteredProducts = (categoryId?: string) => {
+  const { data: products, ...rest } = useProducts();
+
+  const filteredProducts = products?.filter(
+    product => !categoryId || product.category.id === categoryId
+  );
+
+  return { data: filteredProducts, ...rest };
+};

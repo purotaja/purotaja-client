@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import Image from "next/image";
-import Link from 'next/link';
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
-// Types
 interface Image {
   id: string;
   url: string;
@@ -16,71 +16,96 @@ interface Price {
   price: string;
 }
 
-interface StandardVariant {
+interface Review {
+  id: string;
+  rating: number;
+  comment: string;
+}
+
+interface Subproduct {
   id: string;
   name: string;
-  standardPrice: Price;
-  image: Image[];
+  stock: number;
+  perunitprice: number;
+  prices: Price[];
   inStock: boolean;
   featured: boolean;
   discount: number | null;
+  image: Image[];
+  review: Review[];
+  productId: string;
+  standardPrice: {
+    price: string;
+    label: string;
+    isCalculated: boolean;
+    originalPrice?: {
+      price: string;
+      label: string;
+    };
+  };
 }
 
 interface ItemCardProps {
-  subproduct: StandardVariant;
+  subproduct: Subproduct;
 }
 
 const ItemCard = ({ subproduct }: ItemCardProps) => {
-  const {
-    id,
-    name,
-    image,
-    standardPrice,
-    discount
-  } = subproduct;
+  const router = useRouter();
 
-  // Safe discount value (0 if null)
-  const discountValue = discount ?? 0;
+  const originalPrice = parseFloat(subproduct.standardPrice.price);
+  
+  const discountedPrice = (subproduct.discount ?? 0) > 0
+    ? originalPrice - (originalPrice * (subproduct.discount! / 100))
+    : originalPrice;
+
+  const formatPrice = (price: number) => Math.round(price * 100) / 100;
+
 
   return (
-    <Link href={`/category/subproducts/${id}`} className="cursor-pointer">
+    <Link
+      href={`/category/subproducts/${subproduct.id}`}
+      className="cursor-pointer"
+    >
       <Card className="px-5 py-5 items-center rounded-xl shadow-sm justify-center flex flex-col md:gap-2 w-full">
         <div className="w-full md:h-[30vh] h-[24vh] 2xl:h-[25vh] flex items-center justify-center overflow-hidden rounded-xl">
           <Image
-            src={image[0]?.url || "/bata.png"}
-            alt={name}
+            src={subproduct.image[0]?.url || "/bata.png"}
+            alt={subproduct.name}
             height={250}
             width={250}
             className="shrink-0 rounded-xl"
           />
         </div>
         <div className="flex flex-col w-full">
-          <h1 className="text-customBlack text-xl font-normal">{name}</h1>
+          <h1 className="text-customBlack text-xl font-normal">
+            {subproduct.name}
+          </h1>
           <div className="w-full flex items-center justify-between">
             <div className="flex flex-col">
               <h1 className="text-lg font-semibold">
-                {discountValue > 0 ? (
+                {(subproduct.discount ?? 0) > 0 ? (
                   <span className="text-sm font-medium text-red-500 mr-2">
-                    -{discountValue}%
+                    -{subproduct.discount}%
                   </span>
-                ) : (
-                  <span className="text-sm font-medium text-red-500 mr-2">
-                    -0%
-                  </span>
-                )}
-                ₹{standardPrice.price}/<span className="text-sm text-black/70">250gm</span>
+                ) : null}
+                ₹{formatPrice(discountedPrice)}/
+                <span className="text-sm text-black/70">
+                  {subproduct.standardPrice.label}
+                </span>
               </h1>
-              {discountValue > 0 ? (
+              {(subproduct.discount ?? 0) > 0 ? (
                 <h2 className="text-xs line-through">
-                  M.R.P: ₹{standardPrice.price}/250gm
+                  M.R.P: ₹{formatPrice(originalPrice)}/{subproduct.standardPrice.label}
                 </h2>
               ) : (
-                <h2 className="text-xs">M.R.P: ₹{standardPrice.price}/250gm</h2>
+                <h2 className="text-xs">
+                  M.R.P: ₹{formatPrice(originalPrice)}/{subproduct.standardPrice.label}
+                </h2>
               )}
             </div>
             <div className="flex items-center">
-              <Button 
-                variant="outline" 
+              <Button
+                variant="outline"
                 className="px-8 md:px-4 border border-violet hover:bg-violet hover:text-white text-violet"
               >
                 Add

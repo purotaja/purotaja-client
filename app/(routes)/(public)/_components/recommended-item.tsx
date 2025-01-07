@@ -7,24 +7,24 @@ import useSubproducts from "@/hooks/use-subproducts";
 
 const RecommendItemsSkeleton = () => (
   <>
-  <div className="w-full md:flex gap-5 hidden">
-    {[...Array(4)].map((_, i) => (
-      <Card key={i} className="px-5 py-4 rounded-xl shadow-sm w-full">
-        <div className="space-y-4">
-          <Skeleton className="w-full h-[180px] rounded-lg" />
-          <Skeleton className="h-4 w-full" />
-          <div className="flex justify-between items-center">
-            <div className="space-y-2">
-              <Skeleton className="h-2 w-full" />
-              <Skeleton className="h-2 w-full" />
+    <div className="w-full md:flex gap-5 hidden">
+      {[...Array(4)].map((_, i) => (
+        <Card key={i} className="px-5 py-4 rounded-xl shadow-sm w-full">
+          <div className="space-y-4">
+            <Skeleton className="w-full h-[180px] rounded-lg" />
+            <Skeleton className="h-4 w-full" />
+            <div className="flex justify-between items-center">
+              <div className="space-y-2">
+                <Skeleton className="h-2 w-full" />
+                <Skeleton className="h-2 w-full" />
+              </div>
+              <Skeleton className="h-5 w-full" />
             </div>
-            <Skeleton className="h-5 w-full" />
           </div>
-        </div>
-      </Card>
-    ))}
-  </div>
-  <div className="w-full flex gap-5 md:hidden">
+        </Card>
+      ))}
+    </div>
+    <div className="w-full flex gap-5 md:hidden">
       <Card className="px-5 py-4 rounded-xl shadow-sm w-full">
         <div className="space-y-4">
           <Skeleton className="w-full h-[180px] rounded-lg" />
@@ -38,15 +38,18 @@ const RecommendItemsSkeleton = () => (
           </div>
         </div>
       </Card>
-  </div>
+    </div>
   </>
 );
-
 
 const RecommendItems = () => {
   const { standardVariants, isLoading, error } = useSubproducts();
 
-  if (error || (!isLoading && (!standardVariants || standardVariants.length === 0))) {
+  // If there's an error or no data, return null
+  if (
+    error ||
+    (!isLoading && (!standardVariants || standardVariants.length === 0))
+  ) {
     return null;
   }
 
@@ -57,16 +60,14 @@ const RecommendItems = () => {
           Recommended Items
         </h1>
         <div className="w-full">
-          {isLoading && (
-            <Skeleton className="w-full"/>
-          )}
+          {isLoading && <Skeleton className="w-full" />}
         </div>
       </div>
       {isLoading ? (
         <RecommendItemsSkeleton />
       ) : (
         <CustomSwiper>
-          {standardVariants.map((item) => (
+          {standardVariants?.map((item) => (
             <ItemCard key={item.id} subproduct={item} />
           ))}
         </CustomSwiper>

@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
 import Logo from "./logo";
-import useProducts from "@/hooks/use-product";
 import { FaLinkedin, FaInstagram } from "react-icons/fa";
 import { Skeleton } from "../ui/skeleton";
+import { useProducts } from "@/hooks/use-product";
 
 const company = [
   { title: "Works", link: "/works" },
@@ -20,7 +20,7 @@ const legal = [
 ];
 
 const FooterSection = () => {
-  const { products, isLoading } = useProducts();
+  const { data: products, isLoading, error } = useProducts();
 
   return (
     <section className="w-full border-t mx-auto mt-10 md:mt-20">
@@ -83,15 +83,15 @@ const FooterSection = () => {
             ) : (
               <div className="flex gap-8">
                 <div className="flex flex-col gap-2">
-                  {products.slice(0, 5).map((product, index) => (
-                    <Link key={index} href={`/category/products/${product.id}`}>
+                  {products?.slice(0, 5).map((product, index) => (
+                    <Link key={index} href={`/category`}>
                       <span>{product.name}</span>
                     </Link>
                   ))}
                 </div>
                 <div className="flex flex-col gap-2">
-                  {products.slice(0, 5).map((product, index) => (
-                    <Link key={index} href={`/category/products/${product.id}`}>
+                  {products?.slice(0, 5).map((product, index) => (
+                    <Link key={index} href={`/category`}>
                       <span>{product.name}</span>
                     </Link>
                   ))}
