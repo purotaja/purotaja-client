@@ -1,15 +1,19 @@
 import SubproductClientPage from './client'
 
-interface Params {
-  subproductId: string
+interface PageProps {
+  params: {
+    subproductId: string
+  }
 }
 
-const page = (
-  { subproductId }: Params
-) => {
-  return <SubproductClientPage params={{
-    productId: subproductId
-  }}/>
+const Page = ({ params }: PageProps) => {
+  return (
+    <SubproductClientPage 
+      params={{
+        productId: params.subproductId
+      }}
+    />
+  )
 }
 
-export default page;
+export default Page

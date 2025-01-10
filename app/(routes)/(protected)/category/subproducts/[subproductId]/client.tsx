@@ -8,7 +8,7 @@ import {
   BreadcrumbLink,
 } from "@/components/ui/breadcrumb";
 import useProductDetails from "@/hooks/use-product-details";
-import RelatedProducts from "./_components/related-products";
+// import RelatedProducts from "./_components/related-products";
 
 export default function SubproductClientPage({ params }: { params: { productId: string } }) {
   const { product } = useProductDetails(params.productId);
@@ -70,12 +70,12 @@ export default function SubproductClientPage({ params }: { params: { productId: 
       <div className="">{/* Review Section... */}</div>
       <div className="w-full flex mt-10">
         <div className="w-full flex mt-10">
-          {product && (
+          {/* {product && (
             <RelatedProducts
               categoryId={product.categoryId}
               currentProductId={product.id}
             />
-          )}
+          )} */}
         </div>
       </div>
     </div>
