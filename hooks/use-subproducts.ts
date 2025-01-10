@@ -42,6 +42,13 @@ interface StandardPrice {
   };
 }
 
+interface Category {
+  id: string;
+  name: string;
+  image: Image[];
+  Subproduct?: Subproduct[];
+}
+
 
 const getStandardPriceForSubproduct = (subproduct: Subproduct): StandardPrice => {
   const hasVariant = (weight: number) => 
@@ -146,6 +153,8 @@ export const useSubproducts = () => {
     error: rest.error,
   };
 };
+
+
 
 export const useSubproduct = (subproductId: string) => {
   const { data: subproduct, ...rest } = useQuery({

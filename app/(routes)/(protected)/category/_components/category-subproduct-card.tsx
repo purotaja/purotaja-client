@@ -32,7 +32,6 @@ const CategorySubproductCard = ({
   subproduct, 
   isVariant = false,
   onViewVariants,
-  onAddToCart 
 }: CategorySubproductCardProps) => {
   const router = useRouter();
   const { id, name, image, standardPrice, discount } = subproduct;

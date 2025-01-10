@@ -1,7 +1,7 @@
 "use client";
 
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import ProductDetailsPage from "./_components/product-details";
+import ProductDetailsPage from "./_components/subproduct-details";
 import {
   Breadcrumb,
   BreadcrumbItem,
