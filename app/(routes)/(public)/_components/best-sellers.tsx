@@ -42,7 +42,7 @@ const BestSellersSkeleton = () => (
 );
 
 const BestSellers = () => {
-  const { subproducts, standardVariants, isLoading, error } = useSubproducts();
+  const { standardVariants, isLoading, error } = useSubproducts();
 
   // If there's an error or no data, return null
   if (
