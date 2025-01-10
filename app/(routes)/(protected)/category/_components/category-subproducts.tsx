@@ -13,6 +13,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useProducts } from "@/hooks/use-product";
 
 interface CategorySubproductsProps {
   selectedCategoryId: string | null;
@@ -22,7 +23,7 @@ const CategorySubproducts: React.FC<CategorySubproductsProps> = ({
   selectedCategoryId,
 }) => {
   const { standardVariants, isLoading } = useSubproducts();
-  const { products } = useCategory(selectedCategoryId || "");
+  const { data: products } = useProducts();
   const [selectedSubproduct, setSelectedSubproduct] = useState<any>(null);
   const [filters, setFilters] = useState({
     priceRange: "",
@@ -30,7 +31,7 @@ const CategorySubproducts: React.FC<CategorySubproductsProps> = ({
   });
 
   const categoryProducts = useMemo(() => 
-    products?.filter(product => product.categoryId === selectedCategoryId) || [],
+    products?.filter(product => product.category.id === selectedCategoryId) || [],
     [products, selectedCategoryId]
   );
 

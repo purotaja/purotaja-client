@@ -20,7 +20,7 @@ const legal = [
 ];
 
 const FooterSection = () => {
-  const { data: products, isLoading, error } = useProducts();
+  const { data: products, isLoading } = useProducts();
 
   return (
     <section className="w-full border-t mx-auto mt-10 md:mt-20">
